@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class playerMovement : MonoBehaviour
 {
 
+   public GameObject snowballCloneTemplate;
+
     Animator animator;
+
+    Collider collider;
 
     private float movementSpeed = 5f;
 
@@ -19,24 +24,51 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameObject newSnowballGO = Instantiate(snowballCloneTemplate, transform.position + transform.forward + Vector3.up, Quaternion.identity);
+            SnowballScript myNewSnowball = newSnowballGO.GetComponent<SnowballScript>();
+            myNewSnowball.throwSnowball(transform);
+        }
+
+        //set off for default
+
         animator.SetBool("ifRun", false);
 
         if (Input.GetKey(KeyCode.W))
         {
             transform.position += Vector3.forward * Time.deltaTime;
-            
-                animator.SetBool("ifRun", true);
 
-            
+            animator.SetBool("ifRun", true);
+
+
+
 
 
             if (Input.GetKey(KeyCode.Space)) { transform.position += Vector3.up * Time.deltaTime; }
 
             if (Input.GetKey(KeyCode.S)) { transform.position -= Vector3.forward * Time.deltaTime; }
 
+            animator.SetBool("ifRun", true);
+
             if (Input.GetKey(KeyCode.A)) transform.Rotate(Vector3.up, -30 * Time.deltaTime);
 
             if (Input.GetKey(KeyCode.D)) transform.Rotate(Vector3.up, 30 * Time.deltaTime);
+        }
+
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        print(collision.gameObject.name);
+
+        collision.gameObject.transform.position += Vector3.forward;
+
+        Football myFootball = collision.gameObject.GetComponent<Football>();
+        if (myFootball != null) 
+        {
+            myFootball.kick();
         }
     }
 }
