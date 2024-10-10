@@ -65,10 +65,10 @@ public class playerMovement : MonoBehaviour
 
         collision.gameObject.transform.position += Vector3.forward;
 
-        Football myFootball = collision.gameObject.GetComponent<Football>();
-        if (myFootball != null) 
+        footballScript myFootball = collision.gameObject.GetComponent<footballScript>();
+        if (myFootball != null)
         {
-            myFootball.kick();
+           myFootball.Kick();
         }
     }
 }
