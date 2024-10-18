@@ -12,6 +12,12 @@ public class playerMovement : MonoBehaviour
 
     Collider collider;
 
+    public float horizonatalMove;
+
+    public float verticalMove;
+
+    public AudioSource shootingSound;
+
     private float movementSpeed = 5f;
 
     void Start()
@@ -25,6 +31,13 @@ public class playerMovement : MonoBehaviour
     void Update()
     {
 
+        horizonatalMove = Input.GetAxis("Horizontal");
+
+        verticalMove = Input.GetAxis("Vertical");
+
+
+
+
         if (Input.GetMouseButtonDown(0))
         {
             GameObject newSnowballGO = Instantiate(snowballCloneTemplate, transform.position + transform.forward + Vector3.up, Quaternion.identity);
@@ -36,11 +49,15 @@ public class playerMovement : MonoBehaviour
 
         animator.SetBool("ifRun", false);
 
+
+
         if (Input.GetKey(KeyCode.W))
         {
             transform.position += Vector3.forward * Time.deltaTime;
 
             animator.SetBool("ifRun", true);
+
+        }
 
 
 
@@ -50,12 +67,12 @@ public class playerMovement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.S)) { transform.position -= Vector3.forward * Time.deltaTime; }
 
-            animator.SetBool("ifRun", true);
 
-            if (Input.GetKey(KeyCode.A)) transform.Rotate(Vector3.up, -30 * Time.deltaTime);
 
-            if (Input.GetKey(KeyCode.D)) transform.Rotate(Vector3.up, 30 * Time.deltaTime);
-        }
+        if (Input.GetKey(KeyCode.A)) { transform.Rotate(Vector3.up, -30 * Time.deltaTime); }
+
+        if (Input.GetKey(KeyCode.D)) { transform.Rotate(Vector3.up, 30 * Time.deltaTime); }
+        
 
     }
 
