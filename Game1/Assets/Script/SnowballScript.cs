@@ -15,7 +15,7 @@ public class SnowballScript : MonoBehaviour
         else
             print("Could not find Rigid Body");
 
-        rb.AddExplosionForce(500, thrower.position, 3);
+        rb.AddExplosionForce(500000, thrower.position, 3);
     }
 
     // Start is called before the first frame update
